@@ -14,6 +14,8 @@ public interface IGeneralEntity <DTO>{
 
     List<DTO> getAll();
 
+    List<DTO> getByIds(List<UUID> ids);
+
     void save(DTO request);
 
 }

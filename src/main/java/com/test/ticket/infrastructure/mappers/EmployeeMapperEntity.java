@@ -1,10 +1,9 @@
 package com.test.ticket.infrastructure.mappers;
 
 import com.test.ticket.application.dtos.EmployeeDTO;
-import com.test.ticket.application.dtos.TicketDTO;
 import com.test.ticket.domain.enums.Situation;
-import com.test.ticket.domain.models.EmployeeBO;
-import com.test.ticket.domain.models.TicketBO;
+
+
 import com.test.ticket.infrastructure.mysql.entities.EmployeeEntity;
 import com.test.ticket.infrastructure.mysql.entities.TicketEntity;
 import com.test.ticket.infrastructure.mysql.enums.EntitySituation;
@@ -36,7 +35,7 @@ public class EmployeeMapperEntity {
         );
     }
 
-    public EmployeeDTO toResponse(EmployeeEntity entity) {
+    public EmployeeDTO toDTO(EmployeeEntity entity) {
 
         return new EmployeeDTO(
                 entity.getId(),
@@ -48,5 +47,16 @@ public class EmployeeMapperEntity {
         );
     }
 
+    public List<EmployeeDTO> toDTOList(List<EmployeeEntity> entities) {
+        return entities.stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<EmployeeEntity> toEntityList(List<EmployeeDTO> dtos) {
+        return dtos.stream()
+                .map(this::toEntity)
+                .collect(Collectors.toList());
+    }
 
 }

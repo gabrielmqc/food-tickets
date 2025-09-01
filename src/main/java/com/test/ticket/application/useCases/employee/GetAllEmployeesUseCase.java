@@ -8,7 +8,6 @@ import java.util.List;
 
 public class GetAllEmployeesUseCase {
 
-    @Autowired
     private final IEmployee repository;
 
 

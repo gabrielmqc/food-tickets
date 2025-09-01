@@ -10,9 +10,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class CreateEmployeeUseCase {
+
     private final IEmployee repository;
     private final EmployeeMapperBO employeeMapperBO;
-
 
     public CreateEmployeeUseCase(IEmployee repository, EmployeeMapperBO employeeMapperBO) {
         this.repository = repository;

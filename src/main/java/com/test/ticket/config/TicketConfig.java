@@ -1,5 +1,7 @@
 package com.test.ticket.config;
 
+import com.test.ticket.application.contracts.IEmployee;
+import com.test.ticket.application.mappers.EmployeeMapperBO;
 import com.test.ticket.application.mappers.TicketMapperBO;
 import com.test.ticket.infrastructure.mappers.TicketMapperEntity;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +16,7 @@ public class TicketConfig {
     }
 
     @Bean
-    public TicketMapperBO ticketMapperBO() {
-        return new TicketMapperBO();
+    public TicketMapperBO ticketMapperBO(IEmployee employee, EmployeeMapperBO employeeMapperBO) {
+        return new TicketMapperBO(employee,employeeMapperBO);
     }
 }

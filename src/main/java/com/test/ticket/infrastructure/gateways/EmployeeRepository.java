@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -24,7 +25,12 @@ public class EmployeeRepository implements IEmployee {
     @Override
     public EmployeeDTO create(EmployeeDTO request) {
         EmployeeEntity entity = mapperEntity.toEntity(request);
-        return mapperEntity.toResponse(repositoryJPA.save(entity));
+        return mapperEntity.toDTO(repositoryJPA.save(entity));
+    }
+
+    @Override
+    public Optional<EmployeeDTO> getById(UUID id) {
+        return Optional.empty();
     }
 
     @Override
@@ -34,10 +40,14 @@ public class EmployeeRepository implements IEmployee {
 
     @Override
     public List<EmployeeDTO> getAll() {
-        List<EmployeeEntity> entities =  repositoryJPA.findAll();
-        return entities.stream()
-                .map(e -> mapperEntity.toResponse(e))
-                .toList();
+        List<EmployeeEntity> entities = repositoryJPA.findAll();
+        return mapperEntity.toDTOList(entities);
+    }
+
+    @Override
+    public List<EmployeeDTO> getByIds(List<UUID> ids) {
+        List<EmployeeEntity> employeeEntities = repositoryJPA.findAllById(ids);
+        return mapperEntity.toDTOList(employeeEntities);
     }
 
     @Override

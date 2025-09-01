@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public class UpdateEmployeeUseCase {
 
-    @Autowired
+
     private final IEmployee repository;
 
     public UpdateEmployeeUseCase(IEmployee repository) {
