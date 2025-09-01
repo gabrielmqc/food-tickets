@@ -2,7 +2,6 @@ package com.test.ticket.config;
 
 import com.test.ticket.application.contracts.IEmployee;
 import com.test.ticket.application.contracts.ITicket;
-import com.test.ticket.application.mappers.EmployeeMapperBO;
 import com.test.ticket.application.mappers.TicketMapperBO;
 import com.test.ticket.application.useCases.ticket.CreateTicketUseCase;
 import com.test.ticket.infrastructure.mappers.TicketMapperEntity;

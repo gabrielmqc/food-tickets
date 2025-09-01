@@ -44,12 +44,13 @@ public class TicketRepository implements ITicket {
 
     @Override
     public List<TicketDTO> getAll() {
-        return List.of();
+        return mapperEntity.toDTOList(repositoryJPA.findAll());
     }
 
     @Override
     public List<TicketDTO> getByIds(List<UUID> ids) {
-        return List.of();
+
+        return mapperEntity.toDTOList(repositoryJPA.findAllById(ids));
     }
 
     @Override
