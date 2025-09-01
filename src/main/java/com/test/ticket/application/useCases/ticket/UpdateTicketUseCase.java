@@ -23,18 +23,29 @@ public class UpdateTicketUseCase {
     }
 
     public TicketDTO invoke(TicketDTO ticketDTO, UUID id) {
-        Optional<TicketDTO> existingTicket = repository.getById(id);
-
-        if (existingTicket.isEmpty()) {
+        Optional<TicketDTO> existingTicketOpt = repository.getById(id);
+        if (existingTicketOpt.isEmpty()) {
             throw new NotFoundException("Ticket não encontrado");
         }
 
-        TicketBO ticketBO = mapperBO.toBO(existingTicket.get());
+        TicketBO existingBO = mapperBO.toBO(existingTicketOpt.get());
 
-        ticketBO.lastUpdate();
+        if (ticketDTO.employeeId() != null && !ticketDTO.employeeId().equals(existingBO.getEmployee().getId())) {
+            existingBO.setEmployee(mapperBO.getEmployeeBO(ticketDTO.employeeId()));
+        }
 
-        TicketDTO validatedTicket = mapperBO.toDTO(ticketBO);
+        if (ticketDTO.quantity() != null) {
+            existingBO.setQuantity(ticketDTO.quantity());
+        }
 
-        return repository.update(validatedTicket, id).get();
+        if (ticketDTO.situation() != null) {
+            existingBO.setSituation(ticketDTO.situation());
+        }
+
+        existingBO.lastUpdate();
+
+        TicketDTO updatedDTO = mapperBO.toDTO(existingBO);
+        return repository.update(updatedDTO, id).orElseThrow(() ->
+                new NotFoundException("Erro ao atualizar ticket"));
     }
 }

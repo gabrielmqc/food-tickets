@@ -3,12 +3,14 @@ package com.test.ticket.domain.models;
 import com.test.ticket.domain.enums.Situation;
 import com.test.ticket.domain.exceptions.BusinessRuleException;
 import lombok.Getter;
+import lombok.Setter;
 
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
+@Setter
 public class TicketBO extends AbstractModel {
 
     private EmployeeBO employee;
@@ -24,4 +26,6 @@ public class TicketBO extends AbstractModel {
     public void validateForCreation() throws BusinessRuleException {
         super.validateForCreation();
     }
+
+
 }

@@ -9,6 +9,7 @@ import com.test.ticket.domain.models.TicketBO;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class TicketMapperBO {
@@ -29,26 +30,23 @@ public class TicketMapperBO {
         );
     }
 
+    public EmployeeBO getEmployeeBO(UUID employeeId) {
+        return employee.getById(employeeId)
+                .map(e -> new EmployeeBO(
+                        e.id(),
+                        e.name(),
+                        e.cpf(),
+                        e.situation(),
+                        e.alterationDate(),
+                        List.of()
+                ))
+                .orElseThrow(() -> new NotFoundException("Funcionário não encontrado"));
+    }
+
     public TicketBO toBO(TicketDTO dto) {
-
-        Optional<EmployeeDTO> employeeDTO = employee.getById(dto.employeeId());
-
-        if (employeeDTO.isEmpty()) {
-
-            throw new NotFoundException("Funcionário não encontrado");
-        }
-        System.out.println(employeeDTO);
-
         return new TicketBO(
                 dto.id(),
-                new EmployeeBO(
-                        employeeDTO.get().id(),
-                        employeeDTO.get().name(),
-                        employeeDTO.get().cpf(),
-                        employeeDTO.get().situation(),
-                        employeeDTO.get().alterationDate(),
-                        List.of()
-                ),
+                getEmployeeBO(dto.employeeId()),
                 dto.quantity(),
                 dto.situation(),
                 dto.alterationDate()

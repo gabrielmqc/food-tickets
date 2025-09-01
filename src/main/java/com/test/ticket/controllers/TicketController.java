@@ -1,13 +1,16 @@
 package com.test.ticket.controllers;
 
+import com.test.ticket.application.dtos.EmployeeDTO;
 import com.test.ticket.application.dtos.TicketDTO;
 import com.test.ticket.application.useCases.ticket.CreateTicketUseCase;
 import com.test.ticket.application.useCases.ticket.GetAllTicketsUseCase;
+import com.test.ticket.application.useCases.ticket.UpdateTicketUseCase;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/ticket")
@@ -16,10 +19,12 @@ public class TicketController {
 
     private final CreateTicketUseCase createTicketUseCase;
     private final GetAllTicketsUseCase getAllTicketsUseCase;
+    private final UpdateTicketUseCase updateTicketUseCase;
 
-    public TicketController(CreateTicketUseCase createTicketUseCase, GetAllTicketsUseCase getAllTicketsUseCase) {
+    public TicketController(CreateTicketUseCase createTicketUseCase, GetAllTicketsUseCase getAllTicketsUseCase, UpdateTicketUseCase updateTicketUseCase) {
         this.createTicketUseCase = createTicketUseCase;
         this.getAllTicketsUseCase = getAllTicketsUseCase;
+        this.updateTicketUseCase = updateTicketUseCase;
     }
 
     @PostMapping
@@ -33,5 +38,11 @@ public class TicketController {
     public ResponseEntity<List<TicketDTO>> getAll() {
         List<TicketDTO> ticketDTOS = getAllTicketsUseCase.invoke();
         return ResponseEntity.ok(ticketDTOS);
+    }
+
+    @PutMapping("/{ticketId}")
+    public ResponseEntity<TicketDTO> updateEmployee (@RequestBody TicketDTO ticketDTO, @PathVariable UUID ticketId) {
+        TicketDTO updatedTicket = updateTicketUseCase.invoke(ticketDTO, ticketId);
+        return ResponseEntity.ok(updatedTicket);
     }
 }

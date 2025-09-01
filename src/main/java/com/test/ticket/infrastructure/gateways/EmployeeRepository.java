@@ -48,6 +48,7 @@ public class EmployeeRepository implements IEmployee {
                     if (request.cpf() != null) {
                         existingEmployee.setCpf(request.cpf());
                     }
+                    existingEmployee.setAlterationDate(request.alterationDate());
                     EmployeeEntity savedEntity = repositoryJPA.save(existingEmployee);
                     return mapperEntity.toDTO(savedEntity);
                 });

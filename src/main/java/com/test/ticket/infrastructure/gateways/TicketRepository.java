@@ -44,6 +44,7 @@ public class TicketRepository implements ITicket {
 
     @Override
     public Optional<TicketDTO> update(TicketDTO request, UUID id) {
+        System.out.println(request.toString());
         return repositoryJPA.findById(id)
                 .map(existingTicket -> {
                     if (request.employeeId() != null) {
@@ -56,6 +57,7 @@ public class TicketRepository implements ITicket {
                     if (request.quantity() != null) {
                         existingTicket.setQuantity(request.quantity());
                     }
+                    existingTicket.setAlterationDate(request.alterationDate());
                     TicketEntity ticketEntity = repositoryJPA.save(existingTicket);
                     return mapperEntity.toDTO(ticketEntity);
                 });

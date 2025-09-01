@@ -1,6 +1,7 @@
 package com.test.ticket.application.useCases.employee;
 
 import com.test.ticket.application.contracts.IEmployee;
+import com.test.ticket.application.contracts.ITicket;
 import com.test.ticket.application.dtos.EmployeeDTO;
 import com.test.ticket.application.exceptions.NotFoundException;
 import com.test.ticket.application.mappers.EmployeeMapperBO;
@@ -21,19 +22,26 @@ public class UpdateEmployeeUseCase {
         this.mapperBO = mapperBO;
     }
 
-    public EmployeeDTO invoke(EmployeeDTO employeeDTO,UUID id){
-        Optional<EmployeeDTO> existingEmployee = repository.getById(id);
-
-        if (existingEmployee.isEmpty()) {
-            throw  new NotFoundException("Funcionário não encontrado");
+    public EmployeeDTO invoke(EmployeeDTO newData,UUID id){
+        Optional<EmployeeDTO> existingOpt = repository.getById(id);
+        if (existingOpt.isEmpty()) {
+            throw new NotFoundException("Funcionário não encontrado");
         }
 
-        EmployeeBO employeeBO = mapperBO.toBO(existingEmployee.get());
+        EmployeeBO existing = mapperBO.toBO(existingOpt.get());
 
-        employeeBO.lastUpdate();
+        if (newData.name() != null) {
+            existing.setName(newData.name());
+        }
+        if (newData.cpf() != null) {
+            existing.setCpf(newData.cpf());
+        }
 
-        EmployeeDTO validatedEmployee = mapperBO.toDTO(employeeBO);
+        existing.lastUpdate();
 
-        return repository.update(validatedEmployee,id).get();
+        EmployeeDTO updatedDTO = mapperBO.toDTO(existing);
+        return repository.update(updatedDTO, id)
+                .orElseThrow(() -> new NotFoundException("Erro ao atualizar funcionário"));
     }
+
 }
