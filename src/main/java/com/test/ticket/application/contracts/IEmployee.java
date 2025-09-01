@@ -6,11 +6,6 @@ import com.test.ticket.application.dtos.response.EmployeeResponseDTO;
 import java.util.List;
 import java.util.UUID;
 
-public interface IEmployee {
+public interface IEmployee extends IGeneralEntity<EmployeeResponseDTO,EmployeeRequestDTO>{
 
-    EmployeeResponseDTO create(EmployeeRequestDTO employee);
-
-    EmployeeResponseDTO update (UUID employeeId, EmployeeRequestDTO employee);
-
-    List<EmployeeResponseDTO> listEmployees();
 }
