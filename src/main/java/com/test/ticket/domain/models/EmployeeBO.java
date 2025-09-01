@@ -1,30 +1,27 @@
 package com.test.ticket.domain.models;
 
 import com.test.ticket.domain.enums.Situation;
+import com.test.ticket.domain.exceptions.BusinessRuleException;
+import com.test.ticket.domain.interfaces.Creation;
 import lombok.AllArgsConstructor;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
-@AllArgsConstructor
 @Getter
-public class EmployeeBO {
+public class EmployeeBO extends AbstractModel implements Creation{
 
-    private final UUID id;
     private String name;
     private String cpf;
-    private Situation situation;
-    private LocalDate alterationDate;
 
-
-    public void activate() {
-        this.situation = Situation.A;
+    public EmployeeBO(UUID id, Situation situation, LocalDate alterationDate, String name, String cpf) {
+        super(id, situation, alterationDate);
+        this.name = name;
+        this.cpf = cpf;
     }
 
-    public void deactivate() {
-        this.situation = Situation.I;
-    }
 
 }

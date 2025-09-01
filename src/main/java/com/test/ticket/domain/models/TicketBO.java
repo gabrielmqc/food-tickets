@@ -7,22 +7,20 @@ import lombok.Getter;
 import java.time.LocalDate;
 import java.util.UUID;
 
-@AllArgsConstructor
 @Getter
-public class TicketBO {
+public class TicketBO extends AbstractModel {
 
-    private final UUID id;
-    private final EmployeeBO employee;
+
     private Integer quantity;
-    private Situation situation;
-    private LocalDate deliveryDate;
+
+    public TicketBO(UUID id, Situation situation, LocalDate alterationDate, Integer quantity) {
+        super(id, situation, alterationDate);
+        this.quantity = quantity;
+    }
 
     public void add() {
         quantity++;
-        lastUpdate();
+        super.lastUpdate();
     }
 
-    public void lastUpdate () {
-        deliveryDate = LocalDate.now();
-    }
 }
