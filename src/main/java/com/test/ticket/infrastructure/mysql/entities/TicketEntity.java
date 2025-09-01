@@ -22,6 +22,13 @@ public class TicketEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employee_id", nullable = false)
+    private EmployeeEntity employee;
+
+    @Column(nullable = false)
+    private Integer quantity;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 1)
     private EntitySituation situation;
@@ -29,11 +36,6 @@ public class TicketEntity {
     @Column(name = "alteration_date", nullable = false)
     private LocalDate alterationDate;
 
-    @Column(nullable = false)
-    private Integer quantity;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "employee_id", nullable = false)
-    private EmployeeEntity employee;
 
 }

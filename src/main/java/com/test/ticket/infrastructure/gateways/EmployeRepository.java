@@ -4,6 +4,7 @@ import com.test.ticket.application.contracts.IEmployee;
 import com.test.ticket.application.dtos.response.EmployeeResponseDTO;
 import com.test.ticket.domain.models.EmployeeBO;
 import com.test.ticket.infrastructure.mappers.EmployeeMapperEntity;
+import com.test.ticket.infrastructure.mappers.TicketMapperEntity;
 import com.test.ticket.infrastructure.mysql.entities.EmployeeEntity;
 import com.test.ticket.infrastructure.mysql.repositories.EmployeRepositoryJPA;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,14 @@ public class EmployeRepository implements IEmployee {
     @Autowired
     EmployeeMapperEntity mapperEntity;
 
+    @Autowired
+    TicketMapperEntity ticketMapperEntity;
+
     @Override
     public EmployeeResponseDTO create(EmployeeBO request) {
-        EmployeeEntity entity = mapperEntity.toEntity(request);
-        return mapperEntity.toReponse(repositoryJPA.save(entity));
+        System.out.println(request);
+        EmployeeEntity entity = mapperEntity.toEntity(request,ticketMapperEntity);
+        return mapperEntity.toResponse(repositoryJPA.save(entity),ticketMapperEntity);
     }
 
     @Override

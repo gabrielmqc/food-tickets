@@ -19,18 +19,18 @@ public class EmployeeEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @Column(nullable = false, length = 120)
+    private String name;
+
+    @Column(nullable = false, unique = true, length = 14)
+    private String cpf;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 1)
     private EntitySituation situation;
 
     @Column(name = "alteration_date", nullable = false)
     private LocalDate alterationDate;
-
-    @Column(nullable = false, length = 120)
-    private String name;
-
-    @Column(nullable = false, unique = true, length = 14)
-    private String cpf;
 
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TicketEntity> tickets;

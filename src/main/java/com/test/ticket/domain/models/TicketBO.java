@@ -10,11 +10,13 @@ import java.util.UUID;
 @Getter
 public class TicketBO extends AbstractModel {
 
+    private EmployeeBO employee;
     private Integer quantity;
 
-    public TicketBO(UUID id, Situation situation, LocalDate alterationDate, Integer quantity) {
+    public TicketBO(UUID id,EmployeeBO employee, Integer quantity, Situation situation, LocalDate alterationDate) {
         super(id, situation, alterationDate);
         this.quantity = quantity;
+        this.employee = employee;
     }
 
     @Override

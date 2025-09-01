@@ -6,6 +6,10 @@ import com.test.ticket.application.dtos.response.EmployeeResponseDTO;
 import com.test.ticket.application.mappers.EmployeeMapperBO;
 import com.test.ticket.domain.models.EmployeeBO;
 
+import java.time.LocalDate;
+import java.util.List;
+import java.util.UUID;
+
 public class CreateEmployeeUseCase {
     private final IEmployee repository;
     private final EmployeeMapperBO employeeMapperBO;
@@ -18,7 +22,14 @@ public class CreateEmployeeUseCase {
 
     public EmployeeResponseDTO invoke (EmployeeRequestDTO requestDTO) {
 
-        EmployeeBO employeeBO = employeeMapperBO.toBO(requestDTO);
+        EmployeeBO employeeBO = new EmployeeBO(
+                null,
+                requestDTO.name(),
+                requestDTO.cpf(),
+                requestDTO.situation(),
+                LocalDate.now(),
+                List.of()
+        );
 
         employeeBO.validateForCreation();
 

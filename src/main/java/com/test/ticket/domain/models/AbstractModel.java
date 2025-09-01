@@ -5,12 +5,14 @@ import com.test.ticket.domain.exceptions.BusinessRuleException;
 import com.test.ticket.domain.interfaces.Creation;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
 @AllArgsConstructor
 @Getter
+@Setter
 public abstract class AbstractModel implements Creation {
 
     private final UUID id;
