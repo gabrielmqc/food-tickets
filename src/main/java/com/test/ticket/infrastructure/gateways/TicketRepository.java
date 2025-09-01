@@ -3,7 +3,9 @@ package com.test.ticket.infrastructure.gateways;
 import com.test.ticket.application.contracts.ITicket;
 import com.test.ticket.application.dtos.TicketDTO;
 import com.test.ticket.infrastructure.mappers.TicketMapperEntity;
+import com.test.ticket.infrastructure.mysql.entities.EmployeeEntity;
 import com.test.ticket.infrastructure.mysql.entities.TicketEntity;
+import com.test.ticket.infrastructure.mysql.repositories.EmployeeRepositoryJPA;
 import com.test.ticket.infrastructure.mysql.repositories.TicketRepositoryJPA;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class TicketRepository implements ITicket {
     @Autowired
     TicketMapperEntity mapperEntity;
 
+    @Autowired
+    EmployeeRepositoryJPA employeeRepositoryJPA;
+
     @Override
     public TicketDTO create(TicketDTO request) {
         TicketEntity entity = mapperEntity.toEntity(request);
@@ -39,7 +44,21 @@ public class TicketRepository implements ITicket {
 
     @Override
     public Optional<TicketDTO> update(TicketDTO request, UUID id) {
-        return null;
+        return repositoryJPA.findById(id)
+                .map(existingTicket -> {
+                    if (request.employeeId() != null) {
+                        Optional<EmployeeEntity> employee = employeeRepositoryJPA.findById(request.employeeId());
+                        if (employee.isEmpty()) {
+                            throw new EntityNotFoundException("New employee not found");
+                        }
+                        existingTicket.setEmployee(employee.get());
+                    }
+                    if (request.quantity() != null) {
+                        existingTicket.setQuantity(request.quantity());
+                    }
+                    TicketEntity ticketEntity = repositoryJPA.save(existingTicket);
+                    return mapperEntity.toDTO(ticketEntity);
+                });
     }
 
     @Override
