@@ -1,18 +1,15 @@
 package com.test.ticket.application.useCases.employee;
 
 import com.test.ticket.application.contracts.IEmployee;
-import com.test.ticket.application.contracts.ITicket;
 import com.test.ticket.application.dtos.EmployeeDTO;
 import com.test.ticket.application.exceptions.NotFoundException;
 import com.test.ticket.application.mappers.EmployeeMapperBO;
 import com.test.ticket.domain.models.EmployeeBO;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Optional;
 import java.util.UUID;
 
 public class UpdateEmployeeUseCase {
-
 
     private final IEmployee repository;
     private final EmployeeMapperBO mapperBO;

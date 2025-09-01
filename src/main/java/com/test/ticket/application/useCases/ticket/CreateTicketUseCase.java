@@ -51,8 +51,6 @@ public class CreateTicketUseCase {
         );
         ticketBO.validateForCreation();
 
-        System.out.println("ticket validado" + ticketBO);
-
         return repository.create(ticketMapperBO.toDTO(ticketBO));
     }
 }

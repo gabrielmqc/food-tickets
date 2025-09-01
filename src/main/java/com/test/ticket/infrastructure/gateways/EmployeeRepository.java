@@ -33,7 +33,7 @@ public class EmployeeRepository implements IEmployee {
     public Optional<EmployeeDTO> getById(UUID id) {
         Optional<EmployeeEntity> entity = repositoryJPA.findById(id);
         if (entity.isEmpty()) {
-            throw new EntityNotFoundException("Ticket not found");
+            throw new EntityNotFoundException("Employee not found");
         }
         return entity.map(mapperEntity::toDTO);
     }
