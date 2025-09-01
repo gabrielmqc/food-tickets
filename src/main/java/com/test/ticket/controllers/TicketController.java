@@ -2,9 +2,7 @@ package com.test.ticket.controllers;
 
 import com.test.ticket.application.dtos.EmployeeDTO;
 import com.test.ticket.application.dtos.TicketDTO;
-import com.test.ticket.application.useCases.ticket.CreateTicketUseCase;
-import com.test.ticket.application.useCases.ticket.GetAllTicketsUseCase;
-import com.test.ticket.application.useCases.ticket.UpdateTicketUseCase;
+import com.test.ticket.application.useCases.ticket.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,11 +18,15 @@ public class TicketController {
     private final CreateTicketUseCase createTicketUseCase;
     private final GetAllTicketsUseCase getAllTicketsUseCase;
     private final UpdateTicketUseCase updateTicketUseCase;
+    private final ActivateTicketUseCase activateTicketUseCase;
+    private final DeactivateTicketUseCase deactivateTicketUseCase;
 
-    public TicketController(CreateTicketUseCase createTicketUseCase, GetAllTicketsUseCase getAllTicketsUseCase, UpdateTicketUseCase updateTicketUseCase) {
+    public TicketController(CreateTicketUseCase createTicketUseCase, GetAllTicketsUseCase getAllTicketsUseCase, UpdateTicketUseCase updateTicketUseCase, ActivateTicketUseCase activateTicketUseCase, DeactivateTicketUseCase deactivateTicketUseCase) {
         this.createTicketUseCase = createTicketUseCase;
         this.getAllTicketsUseCase = getAllTicketsUseCase;
         this.updateTicketUseCase = updateTicketUseCase;
+        this.activateTicketUseCase = activateTicketUseCase;
+        this.deactivateTicketUseCase = deactivateTicketUseCase;
     }
 
     @PostMapping

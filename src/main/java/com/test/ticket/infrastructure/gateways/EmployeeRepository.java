@@ -67,8 +67,9 @@ public class EmployeeRepository implements IEmployee {
     }
 
     @Override
-    public void save(EmployeeDTO request) {
-
+    public void save(EmployeeDTO employeeDTO) {
+        EmployeeEntity entity = mapperEntity.toEntity(employeeDTO);
+        repositoryJPA.save(entity);
     }
 
 

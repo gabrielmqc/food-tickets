@@ -2,9 +2,7 @@ package com.test.ticket.controllers;
 
 
 import com.test.ticket.application.dtos.EmployeeDTO;
-import com.test.ticket.application.useCases.employee.CreateEmployeeUseCase;
-import com.test.ticket.application.useCases.employee.GetAllEmployeesUseCase;
-import com.test.ticket.application.useCases.employee.UpdateEmployeeUseCase;
+import com.test.ticket.application.useCases.employee.*;
 import com.test.ticket.domain.exceptions.BusinessRuleException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,11 +19,15 @@ public class EmployeeController {
     private final CreateEmployeeUseCase createEmployeeUseCase;
     private final GetAllEmployeesUseCase getAllEmployeesUseCase;
     private final UpdateEmployeeUseCase updateEmployeeUseCase;
+    private final ActivateEmployeeUseCase activateEmployeeUseCase;
+    private final DeactivateEmployeeUseCase deactivateEmployeeUseCase;
 
-    public EmployeeController(CreateEmployeeUseCase createEmployeeUseCase, GetAllEmployeesUseCase getAllEmployeesUseCase, UpdateEmployeeUseCase updateEmployeeUseCase) {
+    public EmployeeController(CreateEmployeeUseCase createEmployeeUseCase, GetAllEmployeesUseCase getAllEmployeesUseCase, UpdateEmployeeUseCase updateEmployeeUseCase, ActivateEmployeeUseCase activateEmployeeUseCase, DeactivateEmployeeUseCase deactivateEmployeeUseCase) {
         this.createEmployeeUseCase = createEmployeeUseCase;
         this.getAllEmployeesUseCase = getAllEmployeesUseCase;
         this.updateEmployeeUseCase = updateEmployeeUseCase;
+        this.activateEmployeeUseCase = activateEmployeeUseCase;
+        this.deactivateEmployeeUseCase = deactivateEmployeeUseCase;
     }
 
     @PostMapping

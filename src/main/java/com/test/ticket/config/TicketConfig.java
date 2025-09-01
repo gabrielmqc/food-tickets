@@ -3,9 +3,7 @@ package com.test.ticket.config;
 import com.test.ticket.application.contracts.IEmployee;
 import com.test.ticket.application.contracts.ITicket;
 import com.test.ticket.application.mappers.TicketMapperBO;
-import com.test.ticket.application.useCases.ticket.CreateTicketUseCase;
-import com.test.ticket.application.useCases.ticket.GetAllTicketsUseCase;
-import com.test.ticket.application.useCases.ticket.UpdateTicketUseCase;
+import com.test.ticket.application.useCases.ticket.*;
 import com.test.ticket.infrastructure.mappers.TicketMapperEntity;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,7 +23,17 @@ public class TicketConfig {
 
     @Bean
     public UpdateTicketUseCase updateTicketUseCase(ITicket ticket, TicketMapperBO ticketMapperBO) {
-        return new UpdateTicketUseCase(ticket,ticketMapperBO);
+        return new UpdateTicketUseCase(ticket, ticketMapperBO);
+    }
+
+    @Bean
+    public ActivateTicketUseCase activateTicketUseCase(ITicket ticket, TicketMapperBO ticketMapperBO) {
+        return new ActivateTicketUseCase(ticket, ticketMapperBO);
+    }
+
+    @Bean
+    public DeactivateTicketUseCase deactivateTicketUseCase(ITicket ticket, TicketMapperBO ticketMapperBO) {
+        return new DeactivateTicketUseCase(ticket, ticketMapperBO);
     }
 
     @Bean
@@ -35,6 +43,6 @@ public class TicketConfig {
 
     @Bean
     public CreateTicketUseCase createTicketUseCase(ITicket ticket, TicketMapperBO mapperBO, IEmployee employee) {
-        return  new CreateTicketUseCase(ticket,mapperBO,employee);
+        return new CreateTicketUseCase(ticket, mapperBO, employee);
     }
 }

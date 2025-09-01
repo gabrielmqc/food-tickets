@@ -75,7 +75,7 @@ public class TicketRepository implements ITicket {
     }
 
     @Override
-    public void save(TicketDTO request) {
+    public void save(TicketDTO ticketDTO) {
 
     }
 }
