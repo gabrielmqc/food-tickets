@@ -1,4 +1,6 @@
 package com.test.ticket.application.dtos.request;
 
-public record EmployeeRequestDTO() {
+import com.test.ticket.domain.enums.Situation;
+
+public record EmployeeRequestDTO(String name, String cpf, Situation situation) {
 }

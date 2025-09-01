@@ -1,4 +1,8 @@
 package com.test.ticket.application.dtos.response;
 
-public record TicketResponseDTO() {
+import com.test.ticket.domain.enums.Situation;
+
+import java.util.UUID;
+
+public record TicketResponseDTO(UUID id, UUID employeId, Integer quantity, Situation situation) {
 }
