@@ -31,12 +31,13 @@ public class TicketMapperBO {
 
     public TicketBO toBO(TicketDTO dto) {
 
-        Optional<EmployeeDTO> employeeDTO = employee.getById(dto.employeId());
+        Optional<EmployeeDTO> employeeDTO = employee.getById(dto.employeeId());
 
         if (employeeDTO.isEmpty()) {
 
             throw new NotFoundException("Funcionário não encontrado");
         }
+        System.out.println(employeeDTO);
 
         return new TicketBO(
                 dto.id(),

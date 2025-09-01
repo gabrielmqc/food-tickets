@@ -5,5 +5,5 @@ import com.test.ticket.domain.enums.Situation;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public record TicketDTO(UUID id, UUID employeId, Integer quantity, Situation situation, LocalDateTime alterationDate) {
+public record TicketDTO(UUID id, UUID employeeId, Integer quantity, Situation situation, LocalDateTime alterationDate) {
 }

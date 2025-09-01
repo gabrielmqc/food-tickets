@@ -23,7 +23,7 @@ public class TicketConfig {
     }
 
     @Bean
-    public CreateTicketUseCase createTicketUseCase(ITicket ticket, TicketMapperBO mapperBO) {
-        return  new CreateTicketUseCase(ticket,mapperBO);
+    public CreateTicketUseCase createTicketUseCase(ITicket ticket, TicketMapperBO mapperBO, IEmployee employee) {
+        return  new CreateTicketUseCase(ticket,mapperBO,employee);
     }
 }

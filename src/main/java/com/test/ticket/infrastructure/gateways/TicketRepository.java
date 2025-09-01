@@ -5,6 +5,7 @@ import com.test.ticket.application.dtos.TicketDTO;
 import com.test.ticket.infrastructure.mappers.TicketMapperEntity;
 import com.test.ticket.infrastructure.mysql.entities.TicketEntity;
 import com.test.ticket.infrastructure.mysql.repositories.TicketRepositoryJPA;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -29,7 +30,11 @@ public class TicketRepository implements ITicket {
 
     @Override
     public Optional<TicketDTO> getById(UUID id) {
-        return Optional.empty();
+        Optional<TicketEntity> entity = repositoryJPA.findById(id);
+        if (entity.isEmpty()) {
+            throw new EntityNotFoundException("Ticket not found");
+        }
+        return entity.map(mapperEntity::toDTO);
     }
 
     @Override

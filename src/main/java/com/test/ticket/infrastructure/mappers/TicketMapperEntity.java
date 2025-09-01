@@ -29,7 +29,7 @@ public class TicketMapperEntity {
     }
 
     public TicketEntity toEntity(TicketDTO dto) {
-        Optional<EmployeeEntity> entity = employeRepositoryJPA.findById(dto.employeId());
+        Optional<EmployeeEntity> entity = employeRepositoryJPA.findById(dto.employeeId());
         if (entity.isEmpty()) {
             throw new EntityNotFoundException("Employee not found");
         }
