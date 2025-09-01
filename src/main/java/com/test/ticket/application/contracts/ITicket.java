@@ -1,7 +1,6 @@
 package com.test.ticket.application.contracts;
 
-import com.test.ticket.application.dtos.request.TicketRequestDTO;
-import com.test.ticket.application.dtos.response.TicketResponseDTO;
+import com.test.ticket.application.dtos.TicketDTO;
 
-public interface ITicket extends IGeneralEntity<TicketResponseDTO, TicketRequestDTO>{
+public interface ITicket extends IGeneralEntity<TicketDTO>{
 }

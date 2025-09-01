@@ -1,7 +1,7 @@
 package com.test.ticket.controllers;
 
-import com.test.ticket.application.dtos.request.EmployeeRequestDTO;
-import com.test.ticket.application.dtos.response.EmployeeResponseDTO;
+
+import com.test.ticket.application.dtos.EmployeeDTO;
 import com.test.ticket.application.useCases.employee.CreateEmployeeUseCase;
 import com.test.ticket.domain.exceptions.BusinessRuleException;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +21,8 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public ResponseEntity<EmployeeResponseDTO> createEmployee(@RequestBody EmployeeRequestDTO employeeResponseDTO) throws BusinessRuleException {
-        EmployeeResponseDTO newEmployee = createEmployeeUseCase.invoke(employeeResponseDTO);
+    public ResponseEntity<EmployeeDTO> createEmployee(@RequestBody EmployeeDTO employeeResponseDTO) throws BusinessRuleException {
+        EmployeeDTO newEmployee = createEmployeeUseCase.invoke(employeeResponseDTO);
         URI location = URI.create("/api/employees/" + newEmployee.id());
         return ResponseEntity.created(location).body(newEmployee);
     }

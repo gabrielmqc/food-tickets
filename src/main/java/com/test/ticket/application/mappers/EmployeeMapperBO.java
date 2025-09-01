@@ -1,27 +1,22 @@
 package com.test.ticket.application.mappers;
 
-import com.test.ticket.application.dtos.request.EmployeeRequestDTO;
-import com.test.ticket.application.dtos.response.EmployeeResponseDTO;
-import com.test.ticket.application.dtos.response.TicketResponseDTO;
+import com.test.ticket.application.dtos.EmployeeDTO;
 import com.test.ticket.domain.models.EmployeeBO;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
+import com.test.ticket.domain.models.TicketBO;
 
 
 public class EmployeeMapperBO {
 
-    @Autowired
-    TicketMapperBO mapperBO;
 
-    EmployeeResponseDTO toResponseDTO(EmployeeBO bo) {
-        List<TicketResponseDTO> ticketResponseDTOS = bo.getTickets().stream().map(mapperBO::toResponseDTO).toList();
-        return new EmployeeResponseDTO(
+    public EmployeeDTO toDTO(EmployeeBO bo) {
+        return new EmployeeDTO(
                 bo.getId(),
                 bo.getName(),
                 bo.getCpf(),
                 bo.getSituation(),
                 bo.getAlterationDate(),
-                ticketResponseDTOS);
+                bo.getTickets().stream().map(TicketBO::getId).toList()
+        );
     }
+
 }

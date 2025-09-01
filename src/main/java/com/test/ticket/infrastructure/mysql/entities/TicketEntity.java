@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -34,7 +35,7 @@ public class TicketEntity {
     private EntitySituation situation;
 
     @Column(name = "alteration_date", nullable = false)
-    private LocalDate alterationDate;
+    private LocalDateTime alterationDate;
 
 
 

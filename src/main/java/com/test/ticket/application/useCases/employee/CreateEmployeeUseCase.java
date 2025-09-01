@@ -1,15 +1,13 @@
 package com.test.ticket.application.useCases.employee;
 
 import com.test.ticket.application.contracts.IEmployee;
-import com.test.ticket.application.dtos.request.EmployeeRequestDTO;
-import com.test.ticket.application.dtos.response.EmployeeResponseDTO;
+import com.test.ticket.application.dtos.EmployeeDTO;
 import com.test.ticket.application.mappers.EmployeeMapperBO;
 import com.test.ticket.domain.exceptions.BusinessRuleException;
 import com.test.ticket.domain.models.EmployeeBO;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 public class CreateEmployeeUseCase {
     private final IEmployee repository;
@@ -21,19 +19,19 @@ public class CreateEmployeeUseCase {
         this.employeeMapperBO = employeeMapperBO;
     }
 
-    public EmployeeResponseDTO invoke (EmployeeRequestDTO requestDTO) throws BusinessRuleException {
+    public EmployeeDTO invoke (EmployeeDTO requestDTO) throws BusinessRuleException {
 
         EmployeeBO employeeBO = new EmployeeBO(
                 null,
                 requestDTO.name(),
                 requestDTO.cpf(),
                 requestDTO.situation(),
-                LocalDate.now(),
+                LocalDateTime.now(),
                 List.of()
         );
 
         employeeBO.validateForCreation();
 
-        return repository.create(employeeBO);
+        return repository.create(employeeMapperBO.toDTO(employeeBO));
     }
 }

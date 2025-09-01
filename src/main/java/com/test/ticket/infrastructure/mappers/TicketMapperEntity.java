@@ -1,46 +1,44 @@
 package com.test.ticket.infrastructure.mappers;
 
-import com.test.ticket.application.dtos.response.TicketResponseDTO;
+import com.test.ticket.application.dtos.TicketDTO;
 import com.test.ticket.domain.enums.Situation;
-import com.test.ticket.domain.models.EmployeeBO;
 import com.test.ticket.domain.models.TicketBO;
 import com.test.ticket.infrastructure.mysql.entities.EmployeeEntity;
 import com.test.ticket.infrastructure.mysql.entities.TicketEntity;
 import com.test.ticket.infrastructure.mysql.enums.EntitySituation;
+import com.test.ticket.infrastructure.mysql.repositories.EmployeeRepositoryJPA;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Optional;
 
 
 public class TicketMapperEntity {
 
-    public TicketBO toBO(TicketEntity entity, EmployeeMapperEntity employeeMapper) {
-        EmployeeBO employeeBO = employeeMapper.toBO(entity.getEmployee(), this);
-        return new TicketBO(
+    @Autowired
+    EmployeeRepositoryJPA employeRepositoryJPA;
+
+    public TicketDTO toDTO(TicketEntity entity) {
+        return new TicketDTO(
                 entity.getId(),
-                employeeBO,
+                entity.getEmployee().getId(),
                 entity.getQuantity(),
                 Situation.valueOf(entity.getSituation().name()),
                 entity.getAlterationDate()
         );
     }
 
-    public TicketEntity toEntity(TicketBO bo, EmployeeMapperEntity employeeMapper) {
-        EmployeeEntity employeeEntity = employeeMapper.toEntity(bo.getEmployee(), this);
+    public TicketEntity toEntity(TicketDTO dto) {
+        Optional<EmployeeEntity> entity = employeRepositoryJPA.findById(dto.employeId());
+        if (entity.isEmpty()) {
+            throw new EntityNotFoundException("Employee not found");
+        }
         return new TicketEntity(
-                bo.getId(),
-                employeeEntity,
-                bo.getQuantity(),
-                EntitySituation.valueOf(bo.getSituation().name()),
-                bo.getAlterationDate()
-        );
-    }
-
-    public TicketResponseDTO toResponse(TicketEntity entity) {
-        return new TicketResponseDTO(
-                entity.getId(),
-                entity.getEmployee().getId(), // só o ID do funcionário
-                entity.getQuantity(),
-                Situation.valueOf(entity.getSituation().name()),
-                entity.getAlterationDate()
+                dto.id(),
+                entity.get(),
+                dto.quantity(),
+                EntitySituation.valueOf(dto.situation().name()),
+                dto.alterationDate()
         );
     }
 

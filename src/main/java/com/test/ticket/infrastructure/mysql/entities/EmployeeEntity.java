@@ -4,7 +4,7 @@ import com.test.ticket.infrastructure.mysql.enums.EntitySituation;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,7 +30,7 @@ public class EmployeeEntity {
     private EntitySituation situation;
 
     @Column(name = "alteration_date", nullable = false)
-    private LocalDate alterationDate;
+    private LocalDateTime alterationDate;
 
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TicketEntity> tickets;

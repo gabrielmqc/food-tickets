@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -17,7 +17,7 @@ public abstract class AbstractModel implements Creation {
 
     private final UUID id;
     private Situation situation;
-    private LocalDate alterationDate;
+    private LocalDateTime alterationDate;
 
     public void activate() {
         this.situation = Situation.A;
@@ -30,13 +30,13 @@ public abstract class AbstractModel implements Creation {
     }
 
     public void lastUpdate () {
-        alterationDate = LocalDate.now();
+        alterationDate = LocalDateTime.now();
     }
 
     @Override
     public void validateForCreation() throws BusinessRuleException {
         if (situation == Situation.I) {
-            throw new BusinessRuleException("A situação inicial do funcionário não pode ser Inativa");
+            throw new BusinessRuleException("A situação inicial não pode ser Inativa");
         }
     }
 

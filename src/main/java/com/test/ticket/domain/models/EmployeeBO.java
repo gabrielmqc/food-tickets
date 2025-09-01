@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,7 +19,7 @@ public class EmployeeBO extends AbstractModel implements Creation{
     private String cpf;
     private List<TicketBO> tickets;
 
-    public EmployeeBO(UUID id,String name, String cpf, Situation situation, LocalDate alterationDate, List<TicketBO> tickets ) {
+    public EmployeeBO(UUID id, String name, String cpf, Situation situation, LocalDateTime alterationDate, List<TicketBO> tickets ) {
         super(id, situation, alterationDate);
         this.name = name;
         this.cpf = cpf;

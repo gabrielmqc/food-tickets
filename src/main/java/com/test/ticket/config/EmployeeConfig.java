@@ -1,13 +1,9 @@
 package com.test.ticket.config;
 
 import com.test.ticket.application.contracts.IEmployee;
-import com.test.ticket.application.dtos.request.EmployeeRequestDTO;
-import com.test.ticket.application.dtos.response.EmployeeResponseDTO;
 import com.test.ticket.application.mappers.EmployeeMapperBO;
 import com.test.ticket.application.useCases.employee.CreateEmployeeUseCase;
-import com.test.ticket.domain.models.EmployeeBO;
 import com.test.ticket.infrastructure.mappers.EmployeeMapperEntity;
-import com.test.ticket.infrastructure.mysql.entities.EmployeeEntity;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
