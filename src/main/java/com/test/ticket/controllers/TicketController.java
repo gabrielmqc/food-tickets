@@ -62,7 +62,7 @@ public class TicketController {
         }
     }
 
-    @PatchMapping("/{ticketId}/activate")
+    @PatchMapping("/{ticketId}/deactivate")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deactivateTicket(@PathVariable UUID ticketId) {
         try {
