@@ -18,8 +18,8 @@ public class TicketConfig {
     }
 
     @Bean
-    public TicketMapperBO ticketMapperBO(IEmployee employee, EmployeeMapperBO employeeMapperBO) {
-        return new TicketMapperBO(employee,employeeMapperBO);
+    public TicketMapperBO ticketMapperBO(IEmployee employee) {
+        return new TicketMapperBO(employee);
     }
 
     @Bean

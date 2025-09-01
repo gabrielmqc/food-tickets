@@ -32,7 +32,7 @@ public class EmployeeMapperBO {
         );
     }
 
-    public EmployeeBO toBO(EmployeeDTO dto) {
+    public  EmployeeBO toBO(EmployeeDTO dto) {
         List<TicketDTO> ticketDTOS = ticketRepository.getByIds(dto.ticketsIds());
         return new EmployeeBO(
                 dto.id(),

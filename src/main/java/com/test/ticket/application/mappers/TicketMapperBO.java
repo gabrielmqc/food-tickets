@@ -14,11 +14,9 @@ import java.util.stream.Collectors;
 public class TicketMapperBO {
 
     private final IEmployee employee;
-    private final EmployeeMapperBO employeeMapperBO;
 
-    public TicketMapperBO(IEmployee employee, EmployeeMapperBO employeeMapperBO) {
+    public TicketMapperBO(IEmployee employee) {
         this.employee = employee;
-        this.employeeMapperBO = employeeMapperBO;
     }
 
     public TicketDTO toDTO(TicketBO bo) {
@@ -42,7 +40,14 @@ public class TicketMapperBO {
 
         return new TicketBO(
                 dto.id(),
-                employeeMapperBO.toBO(employeeDTO.get()),
+                new EmployeeBO(
+                        employeeDTO.get().id(),
+                        employeeDTO.get().name(),
+                        employeeDTO.get().cpf(),
+                        employeeDTO.get().situation(),
+                        employeeDTO.get().alterationDate(),
+                        List.of()
+                ),
                 dto.quantity(),
                 dto.situation(),
                 dto.alterationDate()
