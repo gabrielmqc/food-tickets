@@ -3,6 +3,7 @@ package com.test.ticket.config;
 import com.test.ticket.application.contracts.IEmployee;
 import com.test.ticket.application.contracts.ITicket;
 import com.test.ticket.application.mappers.EmployeeMapperBO;
+import com.test.ticket.application.mappers.TicketMapperBO;
 import com.test.ticket.application.useCases.employee.CreateEmployeeUseCase;
 import com.test.ticket.application.useCases.employee.GetAllEmployeesUseCase;
 import com.test.ticket.infrastructure.mappers.EmployeeMapperEntity;
@@ -23,8 +24,8 @@ public class EmployeeConfig {
     }
 
     @Bean
-    public EmployeeMapperBO employeeMapperBO (ITicket ticket){
-        return new EmployeeMapperBO(ticket);
+    public EmployeeMapperBO employeeMapperBO (ITicket ticket, TicketMapperBO ticketMapperBO){
+        return new EmployeeMapperBO(ticket,ticketMapperBO);
 
     }
 

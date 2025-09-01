@@ -16,7 +16,11 @@ public class CreateTicketUseCase {
         this.ticketMapperBO = ticketMapperBO;
     }
 
-    public TicketDTO invoke (TicketDTO ticketDTO) {
-        TicketBO ticketBO = ticketMapperBO.
+    public TicketDTO invoke(TicketDTO ticketDTO) {
+        TicketBO ticketBO = ticketMapperBO.toBO(ticketDTO);
+
+        ticketBO.validateForCreation();
+
+        return repository.create(ticketMapperBO.toDTO(ticketBO));
     }
 }

@@ -1,8 +1,10 @@
 package com.test.ticket.config;
 
 import com.test.ticket.application.contracts.IEmployee;
+import com.test.ticket.application.contracts.ITicket;
 import com.test.ticket.application.mappers.EmployeeMapperBO;
 import com.test.ticket.application.mappers.TicketMapperBO;
+import com.test.ticket.application.useCases.ticket.CreateTicketUseCase;
 import com.test.ticket.infrastructure.mappers.TicketMapperEntity;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,5 +20,10 @@ public class TicketConfig {
     @Bean
     public TicketMapperBO ticketMapperBO(IEmployee employee, EmployeeMapperBO employeeMapperBO) {
         return new TicketMapperBO(employee,employeeMapperBO);
+    }
+
+    @Bean
+    public CreateTicketUseCase createTicketUseCase(ITicket ticket, TicketMapperBO mapperBO) {
+        return  new CreateTicketUseCase(ticket,mapperBO);
     }
 }
