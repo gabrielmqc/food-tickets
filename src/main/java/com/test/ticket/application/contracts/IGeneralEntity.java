@@ -10,7 +10,7 @@ public interface IGeneralEntity <DTO>{
 
     Optional<DTO> getById(UUID id);
 
-    DTO update(DTO request, UUID id);
+    Optional<DTO> update(DTO request, UUID id);
 
     List<DTO> getAll();
 

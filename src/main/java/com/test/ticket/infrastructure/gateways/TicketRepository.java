@@ -38,7 +38,7 @@ public class TicketRepository implements ITicket {
     }
 
     @Override
-    public TicketDTO update(TicketDTO request, UUID id) {
+    public Optional<TicketDTO> update(TicketDTO request, UUID id) {
         return null;
     }
 

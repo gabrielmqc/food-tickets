@@ -6,6 +6,7 @@ import com.test.ticket.application.mappers.EmployeeMapperBO;
 import com.test.ticket.application.mappers.TicketMapperBO;
 import com.test.ticket.application.useCases.employee.CreateEmployeeUseCase;
 import com.test.ticket.application.useCases.employee.GetAllEmployeesUseCase;
+import com.test.ticket.application.useCases.employee.UpdateEmployeeUseCase;
 import com.test.ticket.infrastructure.mappers.EmployeeMapperEntity;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +22,11 @@ public class EmployeeConfig {
     @Bean
     public GetAllEmployeesUseCase getAllEmployeesUseCase(IEmployee employee) {
         return new GetAllEmployeesUseCase(employee);
+    }
+
+    @Bean
+    public UpdateEmployeeUseCase updateEmployeeUseCase (IEmployee employee, EmployeeMapperBO mapperBO) {
+        return new UpdateEmployeeUseCase(employee,mapperBO);
     }
 
     @Bean

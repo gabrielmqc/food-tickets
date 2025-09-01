@@ -4,7 +4,6 @@ import com.test.ticket.application.contracts.IEmployee;
 import com.test.ticket.application.dtos.EmployeeDTO;
 import com.test.ticket.infrastructure.mappers.EmployeeMapperEntity;
 import com.test.ticket.infrastructure.mysql.entities.EmployeeEntity;
-import com.test.ticket.infrastructure.mysql.entities.TicketEntity;
 import com.test.ticket.infrastructure.mysql.repositories.EmployeeRepositoryJPA;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +39,18 @@ public class EmployeeRepository implements IEmployee {
     }
 
     @Override
-    public EmployeeDTO update(EmployeeDTO request, UUID id) {
-        return null;
+    public Optional<EmployeeDTO> update(EmployeeDTO request, UUID id) {
+        return repositoryJPA.findById(id)
+                .map(existingEmployee -> {
+                    if (request.name() != null) {
+                        existingEmployee.setName(request.name());
+                    }
+                    if (request.cpf() != null) {
+                        existingEmployee.setCpf(request.cpf());
+                    }
+                    EmployeeEntity savedEntity = repositoryJPA.save(existingEmployee);
+                    return mapperEntity.toDTO(savedEntity);
+                });
     }
 
     @Override
