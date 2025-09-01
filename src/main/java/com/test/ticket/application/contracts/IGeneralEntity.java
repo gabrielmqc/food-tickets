@@ -3,14 +3,14 @@ package com.test.ticket.application.contracts;
 import java.util.List;
 import java.util.UUID;
 
-public interface IGeneralEntity <T,D>{
+public interface IGeneralEntity <ResponseDTO, BO>{
 
-    T create ( D request);
+    ResponseDTO create(BO request);
 
-    T update (D request, UUID id);
+    ResponseDTO update(BO request, UUID id);
 
-    List<T> getAll();
+    List<ResponseDTO> getAll();
 
-    void save(D request);
+    void save(BO request);
 
 }
