@@ -2,9 +2,13 @@ package com.test.ticket.controllers;
 
 import com.test.ticket.application.dtos.EmployeeDTO;
 import com.test.ticket.application.dtos.TicketDTO;
+import com.test.ticket.application.exceptions.NotFoundException;
 import com.test.ticket.application.useCases.ticket.*;
+import org.aspectj.weaver.BCException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.net.URI;
 import java.util.List;
@@ -46,5 +50,25 @@ public class TicketController {
     public ResponseEntity<TicketDTO> updateEmployee (@RequestBody TicketDTO ticketDTO, @PathVariable UUID ticketId) {
         TicketDTO updatedTicket = updateTicketUseCase.invoke(ticketDTO, ticketId);
         return ResponseEntity.ok(updatedTicket);
+    }
+
+    @PatchMapping("/{ticketId}/activate")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void activateTicket(@PathVariable UUID ticketId) {
+        try {
+            activateTicketUseCase.invoke(ticketId);
+        } catch (BCException | NotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+    }
+
+    @PatchMapping("/{ticketId}/activate")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deactivateTicket(@PathVariable UUID ticketId) {
+        try {
+            deactivateTicketUseCase.invoke(ticketId);
+        } catch (BCException | NotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
     }
 }
