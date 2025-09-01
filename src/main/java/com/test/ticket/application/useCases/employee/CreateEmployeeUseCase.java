@@ -4,6 +4,7 @@ import com.test.ticket.application.contracts.IEmployee;
 import com.test.ticket.application.dtos.request.EmployeeRequestDTO;
 import com.test.ticket.application.dtos.response.EmployeeResponseDTO;
 import com.test.ticket.application.mappers.EmployeeMapperBO;
+import com.test.ticket.domain.exceptions.BusinessRuleException;
 import com.test.ticket.domain.models.EmployeeBO;
 
 import java.time.LocalDate;
@@ -20,7 +21,7 @@ public class CreateEmployeeUseCase {
         this.employeeMapperBO = employeeMapperBO;
     }
 
-    public EmployeeResponseDTO invoke (EmployeeRequestDTO requestDTO) {
+    public EmployeeResponseDTO invoke (EmployeeRequestDTO requestDTO) throws BusinessRuleException {
 
         EmployeeBO employeeBO = new EmployeeBO(
                 null,
