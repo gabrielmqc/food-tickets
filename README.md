@@ -43,7 +43,7 @@ MySQL → Banco de dados da aplicação
 
 API (Spring Boot) → Responsável pela lógica de negócio
 
-Frontend (React/Thymeleaf) → Interface para interação do usuário
+Frontend (React) → Interface para interação do usuário
 
 🔧 Comandos úteis
 
