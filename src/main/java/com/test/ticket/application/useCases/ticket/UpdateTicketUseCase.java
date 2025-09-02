@@ -42,8 +42,6 @@ public class UpdateTicketUseCase {
             existingBO.setSituation(ticketDTO.situation());
         }
 
-        existingBO.lastUpdate();
-
         TicketDTO updatedDTO = mapperBO.toDTO(existingBO);
         return repository.update(updatedDTO, id).orElseThrow(() ->
                 new NotFoundException("Erro ao atualizar ticket"));

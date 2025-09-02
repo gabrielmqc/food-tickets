@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,13 +25,19 @@ public class TicketController {
     private final UpdateTicketUseCase updateTicketUseCase;
     private final ActivateTicketUseCase activateTicketUseCase;
     private final DeactivateTicketUseCase deactivateTicketUseCase;
+    private final GetByEmployeeAndPeriodUseCase getByEmployeeAndPeriodUseCase;
+    private final GetByPeriodUseCase getByPeriodUseCase;
+    private final GetByEmployeeUseCase getByEmployeeUseCase;
 
-    public TicketController(CreateTicketUseCase createTicketUseCase, GetAllTicketsUseCase getAllTicketsUseCase, UpdateTicketUseCase updateTicketUseCase, ActivateTicketUseCase activateTicketUseCase, DeactivateTicketUseCase deactivateTicketUseCase) {
+    public TicketController(CreateTicketUseCase createTicketUseCase, GetAllTicketsUseCase getAllTicketsUseCase, UpdateTicketUseCase updateTicketUseCase, ActivateTicketUseCase activateTicketUseCase, DeactivateTicketUseCase deactivateTicketUseCase, GetByEmployeeAndPeriodUseCase getByEmployeeAndPeriodUseCase, GetByPeriodUseCase getByPeriodUseCase, GetByEmployeeUseCase getByEmployeeUseCase) {
         this.createTicketUseCase = createTicketUseCase;
         this.getAllTicketsUseCase = getAllTicketsUseCase;
         this.updateTicketUseCase = updateTicketUseCase;
         this.activateTicketUseCase = activateTicketUseCase;
         this.deactivateTicketUseCase = deactivateTicketUseCase;
+        this.getByEmployeeAndPeriodUseCase = getByEmployeeAndPeriodUseCase;
+        this.getByPeriodUseCase = getByPeriodUseCase;
+        this.getByEmployeeUseCase = getByEmployeeUseCase;
     }
 
     @PostMapping
@@ -47,7 +54,7 @@ public class TicketController {
     }
 
     @PutMapping("/{ticketId}")
-    public ResponseEntity<TicketDTO> updateEmployee (@RequestBody TicketDTO ticketDTO, @PathVariable UUID ticketId) {
+    public ResponseEntity<TicketDTO> updateEmployee(@RequestBody TicketDTO ticketDTO, @PathVariable UUID ticketId) {
         TicketDTO updatedTicket = updateTicketUseCase.invoke(ticketDTO, ticketId);
         return ResponseEntity.ok(updatedTicket);
     }
@@ -71,4 +78,23 @@ public class TicketController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
+
+    @GetMapping("/employee/{employeeId}/startDate/{startDate}/endDate/{endDate}")
+    public ResponseEntity<List<TicketDTO>> getByEmployeeAndDate(@PathVariable UUID employeeId, @PathVariable LocalDateTime startDate, @PathVariable LocalDateTime endDate) {
+        List<TicketDTO> ticketDTOS = getByEmployeeAndPeriodUseCase.invoke(employeeId, startDate, endDate);
+        return ResponseEntity.ok(ticketDTOS);
+    }
+
+    @GetMapping("/startDate/{startDate}/endDate/{endDate}")
+    public ResponseEntity<List<TicketDTO>> getByDatePeriod(@PathVariable LocalDateTime startDate, @PathVariable LocalDateTime endDate) {
+        List<TicketDTO> ticketDTOS = getByPeriodUseCase.invoke(startDate, endDate);
+        return ResponseEntity.ok(ticketDTOS);
+    }
+
+    @GetMapping("/employee/{employeeId}")
+    public ResponseEntity<List<TicketDTO>> getByEmployee(@PathVariable UUID employeeId) {
+        List<TicketDTO> ticketDTOS = getByEmployeeUseCase.invoke(employeeId);
+        return ResponseEntity.ok(ticketDTOS);
+    }
+
 }

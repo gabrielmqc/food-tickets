@@ -33,7 +33,6 @@ public class ActivateTicketUseCase {
         TicketBO ticketBO = mapperBO.toBO(ticketDTO.get());
 
         ticketBO.activate();
-        ticketBO.lastUpdate();
 
         ticketRepository.save(mapperBO.toDTO(ticketBO));
     }

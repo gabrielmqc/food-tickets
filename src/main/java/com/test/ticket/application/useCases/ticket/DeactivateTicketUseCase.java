@@ -29,7 +29,6 @@ public class DeactivateTicketUseCase {
         TicketBO ticketBO = mapperBO.toBO(ticketDTO.get());
 
         ticketBO.deactivate();
-        ticketBO.lastUpdate();
 
         ticketRepository.save(mapperBO.toDTO(ticketBO));
     }

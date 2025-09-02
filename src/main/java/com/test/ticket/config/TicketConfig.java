@@ -27,6 +27,21 @@ public class TicketConfig {
     }
 
     @Bean
+    public GetByEmployeeAndPeriodUseCase getByEmployeeAndPeriodUseCase(ITicket ticket) {
+        return new GetByEmployeeAndPeriodUseCase(ticket);
+    }
+
+    @Bean
+    public GetByPeriodUseCase getByPeriodUseCase (ITicket ticket) {
+        return new GetByPeriodUseCase(ticket);
+    }
+
+    @Bean
+    public GetByEmployeeUseCase getByEmployeeUseCase (ITicket ticket) {
+        return new GetByEmployeeUseCase(ticket);
+    }
+
+    @Bean
     public ActivateTicketUseCase activateTicketUseCase(ITicket ticket, TicketMapperBO ticketMapperBO) {
         return new ActivateTicketUseCase(ticket, ticketMapperBO);
     }

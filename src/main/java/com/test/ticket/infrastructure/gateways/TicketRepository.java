@@ -83,16 +83,28 @@ public class TicketRepository implements ITicket {
 
     @Override
     public List<TicketDTO> getByEmployeeId(UUID employeeId) {
+
+        Optional<EmployeeEntity> entity = employeeRepositoryJPA.findById(employeeId);
+
+        if (entity.isEmpty()) {
+            throw new EntityNotFoundException("Employee not found");
+        }
         return mapperEntity.toDTOList(repositoryJPA.findByEmployeeId(employeeId));
     }
 
     @Override
     public List<TicketDTO> getByEmployeeAndPeriod(UUID employeeId, LocalDateTime startDate, LocalDateTime endDate) {
-        return mapperEntity.toDTOList(repositoryJPA.findByEmployeeAndPeriod(employeeId,startDate,endDate));
+        Optional<EmployeeEntity> entity = employeeRepositoryJPA.findById(employeeId);
+
+        if (entity.isEmpty()) {
+            throw new EntityNotFoundException("Employee not found");
+        }
+
+        return mapperEntity.toDTOList(repositoryJPA.findByEmployeeAndPeriod(employeeId, startDate, endDate));
     }
 
     @Override
     public List<TicketDTO> getByPeriod(LocalDateTime startDate, LocalDateTime endDate) {
-        return mapperEntity.toDTOList(repositoryJPA.findByPeriod(startDate,endDate));
+        return mapperEntity.toDTOList(repositoryJPA.findByPeriod(startDate, endDate));
     }
 }
