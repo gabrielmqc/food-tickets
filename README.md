@@ -14,7 +14,7 @@ Docker Compose
 
 Clone este repositório
 
-git clone https://github.com/seu-usuario/food-tickets.git
+git clone https://github.com/gabrielmqc/food-tickets.git
 cd food-tickets
 
 
