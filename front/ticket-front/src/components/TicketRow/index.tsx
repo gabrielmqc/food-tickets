@@ -5,7 +5,7 @@ import { styles } from "./styles";
 
 export default function TicketRow({ t, employees, onChange }: { t: TicketDTO; employees: EmployeeDTO[]; onChange: (x: TicketDTO) => void }) {
     const [editing, setEditing] = useState<boolean>(false)
-    const [form, setForm] = useState<Partial<TicketDTO>>({ quantity: t.quantity, situation: t.situation })
+    const [form, setForm] = useState<Partial<TicketDTO>>({ employeeId: t.employeeId, quantity: t.quantity, situation: t.situation })
 
     async function save() {
         const updated = await api.updateTicket(t.id!, form)
@@ -15,7 +15,23 @@ export default function TicketRow({ t, employees, onChange }: { t: TicketDTO; em
 
     return (
         <tr>
-            <td>{employees.find((e) => e.id === t.employeeId)?.name ?? t.employeeId}</td>
+            <td>
+                {editing ? (
+                    <select
+                        value={form.employeeId as string}
+                        onChange={(e) => setForm((f) => ({ ...f, employeeId: e.target.value }))}
+                        style={styles.input}
+                    >
+                        {employees.map((emp) => (
+                            <option key={emp.id ?? emp.name} value={emp.id ?? ''}>
+                                {emp.name}
+                            </option>
+                        ))}
+                    </select>
+                ) : (
+                    employees.find((e) => e.id === t.employeeId)?.name ?? t.employeeId
+                )}
+            </td>
             <td>
                 {editing ? (
                     <input
