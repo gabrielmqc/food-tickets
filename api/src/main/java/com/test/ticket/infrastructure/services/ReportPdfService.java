@@ -37,7 +37,7 @@ public class ReportPdfService implements IReportGenerator {
             PdfPTable table = new PdfPTable(3);
             table.addCell("Funcionário");
             table.addCell("Quantidade");
-            table.addCell("Data Alteração");
+            table.addCell("Data de Entrega");
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 

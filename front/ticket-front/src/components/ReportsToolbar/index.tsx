@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { api, downloadBlob } from "../../api/client";
 import type { EmployeeDTO } from "../../types";
 import { styles } from "./styles";
 
 export default function ReportsToolbar({ employees }: { employees: EmployeeDTO[] }) {
   const [period, setPeriod] = useState<{ start: string; end: string }>({ start: '', end: '' })
-  const [employeeId, setEmployeeId] = useState<string>('')
+  const [employeeId, setEmployeeId] = useState<string>(
+    employees[0]?.id ?? ''
+  )
 
   function formatDate(d: string) {
     if (!d) return ''
@@ -14,6 +16,12 @@ export default function ReportsToolbar({ employees }: { employees: EmployeeDTO[]
     const mm = m.padStart(2, '0')
     return `${dd}-${mm}-${y}`
   }
+
+  useEffect(() => {
+    if (employees.length > 0 && !employeeId) {
+      setEmployeeId(employees[0].id ?? '')
+    }
+  }, [employees])
 
   return (
     <div style={styles.toolbar}>
@@ -50,6 +58,7 @@ export default function ReportsToolbar({ employees }: { employees: EmployeeDTO[]
       <button
         style={styles.outlineButton}
         onClick={async () => {
+          console.log(formatDate(period.start), period.end)
           if (!period.start || !period.end) return
           const blob = await api.ticketsPdfByPeriod(formatDate(period.start), formatDate(period.end))
           downloadBlob(blob, 'relatorio-tickets.pdf')
@@ -60,6 +69,8 @@ export default function ReportsToolbar({ employees }: { employees: EmployeeDTO[]
       <button
         style={styles.outlineButton}
         onClick={async () => {
+          console.log({ employeeId })
+
           if (!employeeId) return
           const blob = await api.ticketsPdfByEmployee(employeeId)
           downloadBlob(blob, 'relatorio-tickets.pdf')
