@@ -14,7 +14,7 @@ export default function TicketRow({ t, employees, onChange }: { t: TicketDTO; em
     }
 
     return (
-        <tr>
+        <tr style={styles.tr}>
             <td>
                 {editing ? (
                     <select

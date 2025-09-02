@@ -1,5 +1,4 @@
 export const styles = {
-  
   input: {
     padding: "10px",
     border: "1px solid #24304a",
@@ -29,8 +28,16 @@ export const styles = {
     fontWeight: "bold",
   } as React.CSSProperties,
 
+  tr: {
+    textAlign: "center" as "center",
+    backgroundColor: "transparent",
+    fontWeight: "bold",
+    color: "#8b97b1",
+  } as React.CSSProperties,
+
   actionsCell: {
     display: "flex",
+    justifyContent: "center",
     gap: "8px",
     padding: "12px",
   } as React.CSSProperties,
@@ -78,5 +85,4 @@ export const styles = {
     cursor: "pointer",
     minWidth: "80px",
   } as React.CSSProperties,
-
 };

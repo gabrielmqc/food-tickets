@@ -76,7 +76,7 @@ export const styles = {
 
   th: {
     padding: "12px",
-    textAlign: "left" as "left",
+    textAlign: "center" as "center",
     borderBottom: "1px solid #ddd",
     backgroundColor: "transparent",
     fontWeight: "bold",

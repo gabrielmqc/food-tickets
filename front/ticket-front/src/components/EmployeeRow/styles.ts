@@ -1,5 +1,4 @@
 export const styles = {
-
   input: {
     padding: "10px",
     border: "1px solid #24304a",
@@ -9,11 +8,8 @@ export const styles = {
     boxSizing: "border-box" as "border-box",
   } as React.CSSProperties,
 
-
-  th: {
-    padding: "12px",
-    textAlign: "left" as "left",
-    borderBottom: "1px solid #ddd",
+  tr: {
+    textAlign: "center" as "center",
     backgroundColor: "transparent",
     fontWeight: "bold",
     color: "#8b97b1",
@@ -21,6 +17,7 @@ export const styles = {
 
   actionsCell: {
     display: "flex",
+    justifyContent: "center",
     gap: "8px",
     padding: "12px",
   } as React.CSSProperties,

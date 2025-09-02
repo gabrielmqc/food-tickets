@@ -21,7 +21,7 @@ export default function EmployeeRow({ emp, onChange }: { emp: EmployeeDTO; onCha
     }
 
     return (
-        <tr>
+        <tr style={styles.tr}>
             <td>
                 {editing ? (
                     <input
