@@ -7,7 +7,7 @@ function RootLayout() {
   return (
     <div>
       <nav style={{ display: 'flex', gap: 12, padding: 16, borderBottom: '1px solid #eee' }}>
-        <Link to="/employees">Employees</Link>
+        <Link to="/employees">Funcionários</Link>
         <Link to="/tickets">Tickets</Link>
       </nav>
       <Outlet />

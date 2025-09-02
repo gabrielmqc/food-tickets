@@ -50,17 +50,17 @@ export default function EmployeesTemplate({
             </div>
 
             <div style={styles.panel}>
-                {loading && <p>Loading...</p>}
+                {loading && <p>Carregando...</p>}
                 {error && <p style={styles.error}>{error}</p>}
 
                 {hasItems ? (
                     <table style={styles.table}>
                         <thead>
                             <tr>
-                                <th style={styles.th}>Name</th>
+                                <th style={styles.th}>Nome</th>
                                 <th style={styles.th}>CPF</th>
-                                <th style={styles.th}>Situation</th>
-                                <th style={styles.th}>Actions</th>
+                                <th style={styles.th}>Situação</th>
+                                <th style={styles.th}>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
