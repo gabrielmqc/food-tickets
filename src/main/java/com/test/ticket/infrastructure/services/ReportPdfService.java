@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -40,15 +41,17 @@ public class ReportPdfService implements IReportGenerator {
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
-            for (TicketDTO ticket : tickets) {
-                String employeeName = employeeRepositoryJPA.findById(ticket.employeeId())
-                        .map(EmployeeEntity::getName)
-                        .orElse("Desconhecido");
+            tickets.stream()
+                    .sorted(Comparator.comparing(TicketDTO::alterationDate).reversed())
+                    .forEach(ticket -> {
+                        String employeeName = employeeRepositoryJPA.findById(ticket.employeeId())
+                                .map(EmployeeEntity::getName)
+                                .orElse("Desconhecido");
 
-                table.addCell(employeeName);
-                table.addCell(ticket.quantity().toString());
-                table.addCell(ticket.alterationDate().format(formatter));
-            }
+                        table.addCell(employeeName);
+                        table.addCell(ticket.quantity().toString());
+                        table.addCell(ticket.alterationDate().format(formatter));
+                    });
 
             document.add(table);
             document.close();
