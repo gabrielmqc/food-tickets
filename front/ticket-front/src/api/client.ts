@@ -2,7 +2,7 @@ import type { AxiosInstance } from "axios";
 import type { EmployeeDTO, TicketDTO, UUID } from "../types";
 import axios from "axios";
 
-const API_BASE = import.meta.env.VITE_API_BASE ?? "";
+const API_BASE = "";
 
 const axiosInstance: AxiosInstance = axios.create({
   baseURL: API_BASE,

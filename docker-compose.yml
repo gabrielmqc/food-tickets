@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   mysql:
     image: mysql:8.0
@@ -14,14 +16,13 @@ services:
     networks:
       - ticket-network
     healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot" ]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "-proot"]
       interval: 10s
       timeout: 5s
       retries: 5
 
-
   api:
-    build: .
+    build: ./api
     container_name: ticket-api
     depends_on:
       mysql:
@@ -32,6 +33,19 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/ticket-app?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=America/Sao_Paulo
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
+    networks:
+      - ticket-network
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./front/ticket-front
+      dockerfile: Dockerfile
+    container_name: ticket-frontend
+    ports:
+      - "3000:80"  
+    depends_on:
+      - api
     networks:
       - ticket-network
     restart: unless-stopped
