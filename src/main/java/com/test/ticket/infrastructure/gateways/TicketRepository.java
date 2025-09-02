@@ -11,6 +11,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -78,5 +79,20 @@ public class TicketRepository implements ITicket {
     public void save(TicketDTO ticketDTO) {
         TicketEntity entity = mapperEntity.toEntity(ticketDTO);
         repositoryJPA.save(entity);
+    }
+
+    @Override
+    public List<TicketDTO> getByEmployeeId(UUID employeeId) {
+        return mapperEntity.toDTOList(repositoryJPA.findByEmployeeId(employeeId));
+    }
+
+    @Override
+    public List<TicketDTO> getByEmployeeAndPeriod(UUID employeeId, LocalDateTime startDate, LocalDateTime endDate) {
+        return mapperEntity.toDTOList(repositoryJPA.findByEmployeeAndPeriod(employeeId,startDate,endDate));
+    }
+
+    @Override
+    public List<TicketDTO> getByPeriod(LocalDateTime startDate, LocalDateTime endDate) {
+        return mapperEntity.toDTOList(repositoryJPA.findByPeriod(startDate,endDate));
     }
 }
