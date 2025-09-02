@@ -76,6 +76,7 @@ public class TicketRepository implements ITicket {
 
     @Override
     public void save(TicketDTO ticketDTO) {
-
+        TicketEntity entity = mapperEntity.toEntity(ticketDTO);
+        repositoryJPA.save(entity);
     }
 }
