@@ -31,7 +31,7 @@ public class EmployeeMapperEntity {
                 dto.cpf(),
                 EntitySituation.valueOf(dto.situation().name()),
                 dto.alterationDate(),
-                List.of()
+                ticketEntities
         );
     }
 
