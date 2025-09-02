@@ -1,81 +1,116 @@
-import type { EmployeeDTO, TicketDTO, UUID } from '../types'
+import type { AxiosInstance } from "axios";
+import type { EmployeeDTO, TicketDTO, UUID } from "../types";
+import axios from "axios";
 
-const API_BASE = import.meta.env.VITE_API_BASE ?? ''
+const API_BASE = import.meta.env.VITE_API_BASE ?? "";
 
-async function http<T>(path: string, init?: RequestInit): Promise<T> {
-  const hasBody = !!init?.body
-  const res = await fetch(`${API_BASE}${path}`, {
-    headers: hasBody ? { 'Content-Type': 'application/json' } : undefined,
-    ...init,
-  })
-  if (!res.ok) {
-    const text = await res.text()
-    throw new Error(text || `HTTP ${res.status}`)
+const axiosInstance: AxiosInstance = axios.create({
+  baseURL: API_BASE,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response) {
+      return Promise.reject(
+        new Error(error.response.data || `HTTP ${error.response.status}`)
+      );
+    }
+    return Promise.reject(error);
   }
-  // Some endpoints return 204
-  if (res.status === 204) return undefined as unknown as T
-  const contentType = res.headers.get('content-type') || ''
-  if (contentType.includes('application/pdf')) {
-    const blob = await res.blob()
-    return blob as unknown as T
-  }
-  return (await res.json()) as T
-}
+);
 
 export const api = {
-  // Employees
-  listEmployees: () => http<EmployeeDTO[]>('/api/employee'),
-  createEmployee: (payload: Omit<EmployeeDTO, 'id' | 'alterationDate' | 'ticketsIds'>) =>
-    http<EmployeeDTO>('/api/employee', {
-      method: 'POST',
-      body: JSON.stringify({ ...payload }),
-    }),
+
+  listEmployees: () =>
+    axiosInstance.get<EmployeeDTO[]>("/api/employee").then((res) => res.data),
+
+  createEmployee: (
+    payload: Omit<EmployeeDTO, "id" | "alterationDate" | "ticketsIds">
+  ) =>
+    axiosInstance
+      .post<EmployeeDTO>("/api/employee", payload)
+      .then((res) => res.data),
+
   updateEmployee: (employeeId: UUID, payload: Partial<EmployeeDTO>) =>
-    http<EmployeeDTO>(`/api/employee/${employeeId}`, {
-      method: 'PUT',
-      body: JSON.stringify(payload),
-    }),
+    axiosInstance
+      .put<EmployeeDTO>(`/api/employee/${employeeId}`, payload)
+      .then((res) => res.data),
+
   activateEmployee: (employeeId: UUID) =>
-    http<void>(`/api/employee/${employeeId}/activate`, { method: 'PATCH' }),
+    axiosInstance
+      .patch<void>(`/api/employee/${employeeId}/activate`)
+      .then((res) => res.data),
+
   deactivateEmployee: (employeeId: UUID) =>
-    http<void>(`/api/employee/${employeeId}/deactivate`, { method: 'PATCH' }),
+    axiosInstance
+      .patch<void>(`/api/employee/${employeeId}/deactivate`)
+      .then((res) => res.data),
 
-  // Tickets
-  listTickets: () => http<TicketDTO[]>('/api/ticket'),
-  createTicket: (payload: Omit<TicketDTO, 'id' | 'alterationDate'>) =>
-    http<TicketDTO>('/api/ticket', {
-      method: 'POST',
-      body: JSON.stringify({ ...payload }),
-    }),
+  listTickets: () =>
+    axiosInstance.get<TicketDTO[]>("/api/ticket").then((res) => res.data),
+
+  createTicket: (payload: Omit<TicketDTO, "id" | "alterationDate">) =>
+    axiosInstance
+      .post<TicketDTO>("/api/ticket", payload)
+      .then((res) => res.data),
+
   updateTicket: (ticketId: UUID, payload: Partial<TicketDTO>) =>
-    http<TicketDTO>(`/api/ticket/${ticketId}`, {
-      method: 'PUT',
-      body: JSON.stringify(payload),
-    }),
+    axiosInstance
+      .put<TicketDTO>(`/api/ticket/${ticketId}`, payload)
+      .then((res) => res.data),
+
   activateTicket: (ticketId: UUID) =>
-    http<void>(`/api/ticket/${ticketId}/activate`, { method: 'PATCH' }),
+    axiosInstance
+      .patch<void>(`/api/ticket/${ticketId}/activate`)
+      .then((res) => res.data),
+
   deactivateTicket: (ticketId: UUID) =>
-    http<void>(`/api/ticket/${ticketId}/deactivate`, { method: 'PATCH' }),
+    axiosInstance
+      .patch<void>(`/api/ticket/${ticketId}/deactivate`)
+      .then((res) => res.data),
 
-  // Reports (PDF)
   ticketsPdfByPeriod: (start: string, end: string) =>
-    http<Blob>(`/api/ticket/pdf/startDate/${start}/endDate/${end}`),
-  ticketsPdfByEmployee: (employeeId: UUID) =>
-    http<Blob>(`/api/ticket/pdf/employee/${employeeId}`),
-  ticketsPdfByEmployeeAndPeriod: (employeeId: UUID, start: string, end: string) =>
-    http<Blob>(`/api/ticket/pdf/employee/${employeeId}/startDate/${start}/endDate/${end}`),
-}
+    axiosInstance
+      .get<Blob>(`/api/ticket/pdf/startDate/${start}/endDate/${end}`, {
+        responseType: "blob",
+      })
+      .then((res) => res.data),
 
-export type Api = typeof api
+  ticketsPdfByEmployee: (employeeId: UUID) =>
+    axiosInstance
+      .get<Blob>(`/api/ticket/pdf/employee/${employeeId}`, {
+        responseType: "blob",
+      })
+      .then((res) => res.data),
+
+  ticketsPdfByEmployeeAndPeriod: (
+    employeeId: UUID,
+    start: string,
+    end: string
+  ) =>
+    axiosInstance
+      .get<Blob>(
+        `/api/ticket/pdf/employee/${employeeId}/startDate/${start}/endDate/${end}`,
+        {
+          responseType: "blob",
+        }
+      )
+      .then((res) => res.data),
+};
+
+export type Api = typeof api;
 
 export function downloadBlob(blob: Blob, filename: string) {
-  const url = URL.createObjectURL(blob)
-  const a = document.createElement('a')
-  a.href = url
-  a.download = filename
-  document.body.appendChild(a)
-  a.click()
-  a.remove()
-  URL.revokeObjectURL(url)
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
 }
-
