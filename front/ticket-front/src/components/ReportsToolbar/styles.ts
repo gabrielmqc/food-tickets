@@ -73,17 +73,22 @@ export const styles = {
     minWidth: "80px",
   } as React.CSSProperties,
 
-  toolbar: {
-    display: "flex",
-    gap: "15px",
-    alignItems: "end",
-    marginTop: "15px",
-    flexWrap: "wrap" as "wrap",
+   toolbar: {
+    display: 'flex',
+    gap: '15px',
+    alignItems: 'end',
+    flexWrap: 'wrap' as 'wrap',
+    marginTop: '20px',
+    padding: '15px',
+    backgroundColor: '#1a233a',
+    borderRadius: '6px',
+    border: '1px solid #24304a'
   } as React.CSSProperties,
 
   group: {
-    display: "flex",
-    flexDirection: "column" as "column",
-    gap: "5px",
+    display: 'flex',
+    flexDirection: 'column' as 'column',
+    gap: '5px',
+    minWidth: '120px'
   } as React.CSSProperties,
 };
