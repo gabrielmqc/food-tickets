@@ -2,6 +2,7 @@ import { Link, Outlet, RouterProvider, createBrowserRouter } from 'react-router-
 import EmployeesPage from './pages/Employees'
 import TicketsPage from './pages/Tickets'
 import './App.css'
+import { ToastContainer } from 'react-toastify'
 
 function RootLayout() {
   return (
@@ -11,6 +12,17 @@ function RootLayout() {
         <Link to="/tickets">Tickets</Link>
       </nav>
       <Outlet />
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   )
 }

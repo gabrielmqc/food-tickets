@@ -2,7 +2,9 @@ package com.test.ticket.controllers.handlers;
 
 import com.test.ticket.application.exceptions.NotFoundException;
 import com.test.ticket.domain.exceptions.BusinessRuleException;
+import com.test.ticket.infrastructure.exceptions.DuplicateResourceException;
 import lombok.Getter;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -64,5 +66,26 @@ public class GlobalExceptionHandler {
         errorResponse.put("path", request.getDescription(false).replace("uri=", ""));
 
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(DuplicateResourceException.class)
+    public ResponseEntity<String> handleDuplicateResource(DuplicateResourceException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<String> handleDataIntegrityViolation(DataIntegrityViolationException ex) {
+
+        if (ex.getCause() != null && ex.getCause().getMessage().contains("UK21pa39fnqsnhhomta228ap9l5")) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body("CPF já cadastrado.");
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro de integridade no banco de dados.");
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleOtherExceptions(Exception ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Ocorreu um erro interno: " + ex.getMessage());
     }
 }

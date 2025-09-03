@@ -7,6 +7,7 @@ import com.test.ticket.infrastructure.mysql.entities.EmployeeEntity;
 import com.test.ticket.infrastructure.mysql.repositories.EmployeeRepositoryJPA;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class EmployeeRepository implements IEmployee {
     public EmployeeDTO create(EmployeeDTO request) {
         EmployeeEntity entity = mapperEntity.toEntity(request);
         return mapperEntity.toDTO(repositoryJPA.save(entity));
+
     }
 
     @Override

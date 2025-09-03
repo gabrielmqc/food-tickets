@@ -11,18 +11,25 @@ const axiosInstance: AxiosInstance = axios.create({
   },
 });
 
+
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response) {
-      return Promise.reject(
-        new Error(error.response.data || `HTTP ${error.response.status}`)
-      );
+      const errorMessage = error.response.data?.message 
+        || error.response.data 
+        || `HTTP Error ${error.response.status}`;
+      
+      return Promise.reject(new Error(errorMessage));
     }
-    return Promise.reject(error);
+    
+    if (error.request) {
+      return Promise.reject(new Error("Network error - no response received"));
+    }
+    
+    return Promise.reject(new Error(error.message || "Unknown error occurred"));
   }
 );
-
 export const api = {
 
   listEmployees: () =>

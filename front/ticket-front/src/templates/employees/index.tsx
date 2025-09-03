@@ -12,6 +12,10 @@ interface EmployeesTemplateProps {
     onSubmit: (e: React.FormEvent) => void
     onFormChange: (field: keyof Omit<EmployeeDTO, 'id' | 'alterationDate' | 'ticketsIds'>, value: string) => void
     onEmployeeUpdate: (employee: EmployeeDTO) => void
+    formErrors: {
+        name?: string
+        cpf?: string
+    }
 }
 
 export default function EmployeesTemplate({
@@ -22,11 +26,13 @@ export default function EmployeesTemplate({
     hasItems,
     onSubmit,
     onFormChange,
-    onEmployeeUpdate
+    onEmployeeUpdate,
+    formErrors
+
 }: EmployeesTemplateProps) {
     const handleCpfChange = (value: string) => {
         const maskedValue = maskCPF(value);
-      
+
         onFormChange('cpf', maskedValue);
     };
     return (
@@ -34,26 +40,49 @@ export default function EmployeesTemplate({
             <div style={styles.panel}>
                 <h2 style={styles.title}>Funcionários</h2>
                 <form onSubmit={onSubmit} style={styles.form}>
-                    <input
-                        placeholder="Name"
-                        value={form.name}
-                        onChange={(e) => onFormChange('name', e.target.value)}
-                        required
-                        style={styles.input}
-                    />
-                  <input
-                        placeholder="CPF"
-                        value={maskCPF(form.cpf)} 
-                        onChange={(e) => handleCpfChange(e.target.value)}
-                        required
-                        style={styles.input}
-                        maxLength={14} 
-                    />
+                    <div>
+                        <input
+                            placeholder="Name"
+                            value={form.name}
+                            onChange={(e) => onFormChange('name', e.target.value)}
+                            required
+                            style={{
+                                ...styles.input,
+                                borderColor: formErrors.name ? 'red' : '#ccc'
+                            }}
+                        />
+                        {formErrors.name && (
+                            <span style={{ color: 'red', fontSize: '12px' }}>
+                                {formErrors.name}
+                            </span>
+                        )}
+                    </div>
+
+                    <div>
+                        <input
+                            placeholder="CPF"
+                            value={maskCPF(form.cpf)}
+                            onChange={(e) => handleCpfChange(e.target.value)}
+                            required
+                            style={{
+                                ...styles.input,
+                                borderColor: formErrors.cpf ? 'red' : '#ccc'
+                            }}
+                            maxLength={14}
+                        />
+                        {formErrors.cpf && (
+                            <span style={{ color: 'red', fontSize: '12px' }}>
+                                {formErrors.cpf}
+                            </span>
+                        )}
+                    </div>
+
                     <button type="submit" style={styles.submitButton}>
                         Criar
                     </button>
                 </form>
             </div>
+
 
             <div style={styles.panel}>
                 {loading && <p>Carregando...</p>}

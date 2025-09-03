@@ -22,13 +22,26 @@ export const styles = {
     fontSize: "24px",
     fontWeight: "bold",
   } as React.CSSProperties,
+  formField: {
+    position: "relative" as "relative",
+    minHeight: "60px", 
+  } as React.CSSProperties,
 
-  form: {
+  errorMessage: {
+    color: "red",
+    fontSize: "12px",
+    position: "absolute" as "absolute",
+    bottom: "-18px",
+    left: "0",
+    right: "0",
+  } as React.CSSProperties,
+ form: {
     display: "grid",
     gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
     gap: "15px",
     alignItems: "end",
-  } as React.CSSProperties,
+    alignContent: "start" // Adicione esta linha
+} as React.CSSProperties,
 
   input: {
     padding: "10px",
