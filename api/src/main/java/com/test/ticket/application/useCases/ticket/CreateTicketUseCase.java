@@ -6,6 +6,7 @@ import com.test.ticket.application.dtos.EmployeeDTO;
 import com.test.ticket.application.dtos.TicketDTO;
 import com.test.ticket.application.exceptions.NotFoundException;
 import com.test.ticket.application.mappers.TicketMapperBO;
+import com.test.ticket.domain.enums.Situation;
 import com.test.ticket.domain.models.EmployeeBO;
 import com.test.ticket.domain.models.TicketBO;
 

@@ -25,6 +25,9 @@ public class TicketBO extends AbstractModel {
     @Override
     public void validateForCreation() throws BusinessRuleException {
         super.validateForCreation();
+        if (employee.getSituation() == Situation.I) {
+            throw new BusinessRuleException("Não é possível criar tickets para um usuário inativo");
+        }
     }
 
 
