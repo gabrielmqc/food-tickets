@@ -1,11 +1,11 @@
 package com.test.ticket.application.useCases.ticket;
 
 import com.test.ticket.application.contracts.ITicket;
-import com.test.ticket.application.dtos.EmployeeDTO;
+
 import com.test.ticket.application.dtos.TicketDTO;
 import com.test.ticket.application.exceptions.NotFoundException;
 import com.test.ticket.application.mappers.TicketMapperBO;
-import com.test.ticket.domain.models.EmployeeBO;
+
 import com.test.ticket.domain.models.TicketBO;
 
 import java.util.Optional;

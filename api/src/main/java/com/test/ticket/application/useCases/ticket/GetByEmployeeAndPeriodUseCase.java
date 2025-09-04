@@ -1,7 +1,6 @@
 package com.test.ticket.application.useCases.ticket;
 
 import com.test.ticket.application.contracts.ITicket;
-import com.test.ticket.application.dtos.EmployeeDTO;
 import com.test.ticket.application.dtos.TicketDTO;
 
 import java.time.LocalDateTime;
