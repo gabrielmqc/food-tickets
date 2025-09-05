@@ -46,5 +46,6 @@ Acesse a aplicação
 Sobre a Arquitetura escolhida:
   Para a API escolhi seguir os principios da Clean Arch, focando em um código desacoplado e separado em camadas, acredito que essa arquitetura seja muito poderosa para construir sistemas duradouros e de facil manutenção, e em conjunto a uma linguagem que já é orientada a Objetos como é o caso do Java ou c#
   se mostra ainda mais funcional.
-  Junto da arquitetura também apliquei alguns conceitos da Orientação a Objetos no meu dominio e application, utlizando de classes abstratas e interfaces genéricas para criar um ambiente de facil expansão, e também encapsulando a lógica de negócio dentro do meu dominio, indepente de frameworks
-
+  Junto da arquitetura também apliquei alguns conceitos da Orientação a Objetos no meu dominio e application, utlizando de classes abstratas e interfaces genéricas para criar um ambiente de facil expansão, e também encapsulando a lógica de negócio dentro do meu dominio, indepente de frameworks.
+  Também criei testes unitários para validar meus casos de uso, testando cenários de erros diferentes
+  
